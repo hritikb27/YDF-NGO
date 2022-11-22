@@ -1,6 +1,7 @@
 import { MagnifyingGlassIcon } from '@heroicons/react/24/outline';
 import { useMemo, useState } from 'react';
 import nodes from '../../utils/sampleData';
+import AddUser from '../Modals/addUser';
 import Pagination from '../Pagination';
 
 let PageSize = 10;
@@ -8,6 +9,7 @@ let PageSize = 10;
 const UserManagement = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [currentItems, setCurrentItems] = useState()
+  const [openModal, setOpenModal] = useState(false)
 
   useMemo(() => {
     const firstPageIndex = (currentPage - 1) * PageSize;
@@ -45,6 +47,7 @@ const UserManagement = () => {
           <button
             type="button"
             className="inline-flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto"
+            onClick={() => setOpenModal(true)}
           >
             Add user
           </button>
@@ -98,6 +101,7 @@ const UserManagement = () => {
               onPageChange={page => setCurrentPage(page)}
             />
           </div>
+          <AddUser openModal={openModal} setOpenModal={setOpenModal} />
         </div>
       </div>
     </div>
