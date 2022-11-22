@@ -1,9 +1,27 @@
-import { Fragment, useRef, useState } from 'react'
+import { Fragment, useReducer, useRef, useState } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { CheckIcon } from '@heroicons/react/24/outline'
 
+const initialState = { studentID: '', name: '' };
+
+function reducer(state, action) {
+  switch (action.type) {
+    case 'studentID':
+      return { ...state, studentID: action.payload };
+    case 'name':
+      return { ...state, name: action.payload };
+    default:
+      throw new Error();
+  }
+}
+
 const AddUser = ({ openModal, setOpenModal }) => {
+    const [state, dispatch] = useReducer(reducer, initialState)
     const cancelButtonRef = useRef(null)
+
+    const handleAddUser = () => {
+        setOpenModal(false)
+    }
 
     return (
         <Transition.Root show={openModal} as={Fragment}>
@@ -47,6 +65,8 @@ const AddUser = ({ openModal, setOpenModal }) => {
                                                 </label>
                                                 <div className="mt-1">
                                                     <input
+                                                        value={state.studentID}
+                                                        onChange={(e) => dispatch({ type: 'studentID', payload: e.target.value })}
                                                         type="text"
                                                         required
                                                         className="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
@@ -60,6 +80,8 @@ const AddUser = ({ openModal, setOpenModal }) => {
                                                 </label>
                                                 <div className="mt-1">
                                                     <input
+                                                        value={state.name}
+                                                        onChange={(e) => dispatch({ type: 'name', payload: e.target.value })}
                                                         type="text"
                                                         required
                                                         className="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
@@ -73,7 +95,7 @@ const AddUser = ({ openModal, setOpenModal }) => {
                                     <button
                                         type="button"
                                         className="inline-flex w-full justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:col-start-2 sm:text-sm"
-                                        onClick={() => setOpenModal(false)}
+                                        onClick={handleAddUser}
                                     >
                                         Add User
                                     </button>
