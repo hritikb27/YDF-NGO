@@ -1,12 +1,13 @@
 import { MagnifyingGlassIcon } from '@heroicons/react/24/outline';
 import { useMemo, useState } from 'react';
-import nodes from '../../utils/sampleData';
+import { useSelector } from 'react-redux';
 import AddUser from '../Modals/addUser';
 import Pagination from '../Pagination';
 
 let PageSize = 10;
 
 const UserManagement = () => {
+  const usersList = useSelector(state => state.users.users)
   const [currentPage, setCurrentPage] = useState(1);
   const [currentItems, setCurrentItems] = useState()
   const [openModal, setOpenModal] = useState(false)
@@ -14,12 +15,12 @@ const UserManagement = () => {
   useMemo(() => {
     const firstPageIndex = (currentPage - 1) * PageSize;
     const lastPageIndex = firstPageIndex + PageSize;
-    setCurrentItems(nodes.slice(firstPageIndex, lastPageIndex))
-    return nodes.slice(firstPageIndex, lastPageIndex);
-  }, [currentPage]);
+    setCurrentItems(usersList.slice(firstPageIndex, lastPageIndex))
+    return usersList.slice(firstPageIndex, lastPageIndex);
+  }, [currentPage, usersList]);
 
   const handleChange = (query) => {
-    const filteredResults = nodes.filter(item=>item.name.includes(query))
+    const filteredResults = usersList.filter(item=>item.name.includes(query))
     setCurrentItems(filteredResults)
   }
   return (
@@ -96,7 +97,7 @@ const UserManagement = () => {
             <Pagination
               className="pagination-bar"
               currentPage={currentPage}
-              totalCount={nodes.length}
+              totalCount={usersList.length}
               pageSize={PageSize}
               onPageChange={page => setCurrentPage(page)}
             />
