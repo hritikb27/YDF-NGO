@@ -9,7 +9,9 @@ export const usersSlice = createSlice({
             const user = {
                 id: action.payload.studentID,
                 name: action.payload.name,
-                type: 'TASK',
+                email: action.payload.email,
+                insulin: action.payload.insulin,
+                strips: action.payload.strips
             };
 
             state.users.push(user);

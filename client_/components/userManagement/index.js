@@ -70,7 +70,10 @@ const UserManagement = () => {
                     Email
                   </th>
                   <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                    Role
+                    Insulin
+                  </th>
+                  <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
+                    Strips
                   </th>
                   <th scope="col" className="relative py-3.5 pl-3 pr-4 sm:pr-6">
                     <span className="sr-only">Edit</span>
@@ -84,7 +87,9 @@ const UserManagement = () => {
                       {person.id}
                     </td>
                     <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{person.name}</td>
-                    <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{person.type}</td>
+                    <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{person.email}</td>
+                    <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{person.insulin}</td>
+                    <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{person.strips}</td>
                     <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
                       <a href="#" className="text-indigo-600 hover:text-indigo-900">
                         Edit<span className="sr-only">, {person.name}</span>

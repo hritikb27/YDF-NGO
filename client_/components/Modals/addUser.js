@@ -4,7 +4,7 @@ import { CheckIcon } from '@heroicons/react/24/outline'
 import { addUser } from '../../features/users/usersSlice';
 import { useDispatch } from 'react-redux';
 
-const initialState = { studentID: '', name: '' };
+const initialState = { studentID: '', name: '', email: '', insulin: 0, strips: 0 };
 
 function reducer(state, action) {
   switch (action.type) {
@@ -12,6 +12,12 @@ function reducer(state, action) {
       return { ...state, studentID: action.payload };
     case 'name':
       return { ...state, name: action.payload };
+    case 'email':
+      return { ...state, email: action.payload };
+    case 'insulin':
+      return { ...state, insulin: action.payload };
+    case 'strips':
+      return { ...state, strips: action.payload };
     default:
       throw new Error();
   }
@@ -23,7 +29,7 @@ const AddUser = ({ openModal, setOpenModal }) => {
     const cancelButtonRef = useRef(null)
 
     const handleAddUser = () => {
-        dispatch(addUser({name: state.name, studentID: state.studentID}))
+        dispatch(addUser({name: state.name, studentID: state.studentID, email: state.email, insulin: state.insulin, strips: state.strips}))
         setOpenModal(false)
     }
 
@@ -87,6 +93,48 @@ const AddUser = ({ openModal, setOpenModal }) => {
                                                         value={state.name}
                                                         onChange={(e) => dispatchInput({ type: 'name', payload: e.target.value })}
                                                         type="text"
+                                                        required
+                                                        className="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                                                    />
+                                                </div>
+                                            </div>
+                                            <div className='w-[70%]'>
+                                                <label htmlFor="name" className="block text-start text-sm font-medium text-gray-700">
+                                                    Email
+                                                </label>
+                                                <div className="mt-1">
+                                                    <input
+                                                        value={state.email}
+                                                        onChange={(e) => dispatchInput({ type: 'email', payload: e.target.value })}
+                                                        type="email"
+                                                        required
+                                                        className="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                                                    />
+                                                </div>
+                                            </div>
+                                            <div className='w-[70%]'>
+                                                <label htmlFor="name" className="block text-start text-sm font-medium text-gray-700">
+                                                    Insulin
+                                                </label>
+                                                <div className="mt-1">
+                                                    <input
+                                                        value={state.insulin}
+                                                        onChange={(e) => dispatchInput({ type: 'insulin', payload: e.target.value })}
+                                                        type="number"
+                                                        required
+                                                        className="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                                                    />
+                                                </div>
+                                            </div>
+                                            <div className='w-[70%]'>
+                                                <label htmlFor="name" className="block text-start text-sm font-medium text-gray-700">
+                                                    Strips
+                                                </label>
+                                                <div className="mt-1">
+                                                    <input
+                                                        value={state.strips}
+                                                        onChange={(e) => dispatchInput({ type: 'strips', payload: e.target.value })}
+                                                        type="number"
                                                         required
                                                         className="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
                                                     />
