@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 import AddUser from '../Modals/addUser';
 import Pagination from '../Pagination';
 
+
 let PageSize = 10;
 
 const UserManagement = () => {
