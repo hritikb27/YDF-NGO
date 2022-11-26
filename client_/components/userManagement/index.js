@@ -64,17 +64,38 @@ const UserManagement = () => {
                   <th scope="col" className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6">
                     ID
                   </th>
+                  <th scope="col" className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6">
+                    Notes
+                  </th>
                   <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
                     Name
                   </th>
                   <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                    Email
+                    Address
+                  </th>
+                  <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
+                    DOB
+                  </th>
+                  <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
+                    Gender
+                  </th>
+                  <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
+                    Dr. & Hospital
+                  </th>
+                  <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
+                    HBA1C
                   </th>
                   <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
                     Insulin
                   </th>
                   <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
                     Strips
+                  </th>
+                  <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
+                    Syringe/Pen Needle
+                  </th>
+                  <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
+                    Email
                   </th>
                   <th scope="col" className="relative py-3.5 pl-3 pr-4 sm:pr-6">
                     <span className="sr-only">Edit</span>
@@ -87,10 +108,21 @@ const UserManagement = () => {
                     <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
                       {person.id}
                     </td>
-                    <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{person.name}</td>
-                    <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{person.email}</td>
+                    <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{}</td>
+                    <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                      <div>{person.name}</div>
+                      <div>{person.name}</div>
+                      <div>{person.name}</div>
+                    </td>
+                    <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{'Address'}</td>
+                    <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{'DOB'}</td>
+                    <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{'F'}</td>
+                    <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{'Dr.'}</td>
+                    <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{'HBA1C'}</td>
                     <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{person.insulin}</td>
                     <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{person.strips}</td>
+                    <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{'Syringe/Pen'}</td>
+                    <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{person.email}</td>
                     <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
                       <a href="#" className="text-indigo-600 hover:text-indigo-900">
                         Edit<span className="sr-only">, {person.name}</span>
