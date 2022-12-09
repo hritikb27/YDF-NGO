@@ -12,53 +12,53 @@ datasource db {
 
 model Student {
   id            Int      @id @default(autoincrement())
-  ydfID         String
-  notes         String
+  ydfID         String   @unique
+  notes         String?
   Name          String
-  FatherName    String
-  MotherName    String
-  Address       String
-  DOB           DateTime
+  FatherName    String?
+  MotherName    String?
+  Address       String?
+  DOB           DateTime?
   gender        Gender
-  Doctor        String
-  Hospital      String
+  Doctor        String?
+  Hospital      String?
   hba1c         HBA1C[]
-  insulinType   String
+  insulinType   String?
   insulin       Insulin[]    @relation("insulin")
-  stripType     String
+  stripType     String?
   strips        Strip[]      @relation("strips")
-  syringeType   String
+  syringeType   String?
   syringes      Syringe[]    @relation("syringe")
 }
 
 model HBA1C {
   id             Int         @id @default(autoincrement())
-  student        Student?    @relation(fields: [studentId], references: [id])
-  studentId      Int
+  student        Student?    @relation(fields: [studentId], references: [ydfID])
+  studentId      String
   value          Decimal    @db.Decimal(10, 2)
   date           DateTime
 }
 
 model Insulin {
   id             Int         @id @default(autoincrement())
-  student        Student?    @relation("insulin", fields: [studentId], references: [id])
-  studentId      Int
+  student        Student?    @relation("insulin", fields: [studentId], references: [ydfID])
+  studentId      String
   value          Int
   date           DateTime
 }
 
 model Strip {
   id             Int         @id @default(autoincrement())
-  student        Student?    @relation("strips", fields: [studentId], references: [id])
-  studentId      Int
+  student        Student?    @relation("strips", fields: [studentId], references: [ydfID])
+  studentId      String
   value          Int
   date           DateTime
 }
 
 model Syringe {
   id             Int         @id @default(autoincrement())
-  student        Student?    @relation("syringe", fields: [studentId], references: [id])
-  studentId      Int
+  student        Student?    @relation("syringe", fields: [studentId], references: [ydfID])
+  studentId      String
   value          Int
   date           DateTime
 }
