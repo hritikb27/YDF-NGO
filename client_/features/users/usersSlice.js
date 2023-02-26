@@ -3,15 +3,13 @@ import nodes from '../../utils/sampleData';
 
 export const usersSlice = createSlice({
     name: 'users',
-    initialState: { users: [...nodes] },
+    initialState: { users: [] },
     reducers: {
         addUser: (state, action) => {
             const user = {
-                id: action.payload.studentID,
-                name: action.payload.name,
-                email: action.payload.email,
-                insulin: action.payload.insulin,
-                strips: action.payload.strips
+                ydfID: action.payload.ydfID,
+                Name: action.payload.name,
+                gender: action.payload.gender,
             };
 
             state.users.push(user);
@@ -25,12 +23,16 @@ export const usersSlice = createSlice({
 
                 return user;
             })
-        }
+        },
+
+        updateUserList: (state, action) => {
+            state.users = action.payload
+        },
     }
 });
 
 // this is for dispatch
-export const { addUser, updateUser } = usersSlice.actions;
+export const { addUser, updateUser, updateUserList } = usersSlice.actions;
 
 // this is for configureStore
 export default usersSlice.reducer;

@@ -2,10 +2,15 @@
 import classNames from "../../utils/classNames";
 
 const StaticSidebar = ({ navigation }) => {
+
+    const handleLogout =() => {
+        sessionStorage.removeItem('token')
+    }
+
     return (
-        <div className="hidden md:fixed md:inset-y-0 md:flex md:w-64 md:flex-col">
+        <div className="z-50 hidden md:fixed md:inset-y-0 md:flex md:w-64 md:flex-col">
             {/* Sidebar component, swap this element with another sidebar if you like */}
-            <div className="flex flex-grow flex-col overflow-y-auto bg-indigo-700 pt-5">
+            <div className="flex flex-grow flex-col overflow-y-auto bg-indigo-700 pt-5 items-between">
                 <div className="flex flex-shrink-0 items-center px-4">
                     <img
                         className="h-8 w-auto"
@@ -30,7 +35,13 @@ const StaticSidebar = ({ navigation }) => {
                         ))}
                     </nav>
                 </div>
+            <div>
+                <button onClick={handleLogout} className={
+                    'w-[50%] mx-auto bg-indigo-800 text-white text-indigo-100 hover:bg-indigo-600 group flex justify-center items-center px-2 py-2 mb-4 text-sm font-medium rounded-md'
+                }>Logout</button>
             </div>
+            </div>
+
         </div>
     )
 }

@@ -1,160 +1,115 @@
 const express = require('express');
 const router = express.Router();
-const { PrismaClient } = require('@prisma/client')
-const prisma = new PrismaClient()
+const passport = require('passport');
+require('../utils/passport')(passport)
+const { students, JwtSecretKey } = require('../utils/db')
 
-router.post('/add', async (req, res) => {
+router.post('/add', passport.authenticate('jwt',{session:false}), async (req, res) => {
     const { ydfID, Name, gender } = req.body
-    await prisma.student.create({
-        data: {
-            ydfID,
-            Name,
-            gender,
-        },
-    })
+    console.log({ ydfID, Name, gender })
+    const doc = {
+        ydfID,
+        Name,
+        gender
+    }
+    const result = await students.insertOne(doc);
+    console.log(
+        `A student was added with the _id: ${result.insertedId}`,
+    );
     res.sendStatus(200)
 })
 
-router.get('/', async (req, res) => {
-    const data = await prisma.student.findMany()
+router.get('/', passport.authenticate('jwt',{session:false}), async (req, res) => {
+    const data = await students.find().toArray()
+    console.log(data)
     res.json(data)
 })
 
-router.put('/profile', async (req, res) => {
+router.put('/update', passport.authenticate('jwt',{session:false}), async (req, res) => {
     const { ydfID, notes, Name, FatherName, MotherName, Address, DOB, gender, Doctor, Hospital } = req.body
-
-    await prisma.student.update({
-        where: {
-            ydfID
-        },
-        data: {
+    console.log('Update: ', { ydfID, notes, Name, FatherName, MotherName, Address, DOB, gender, Doctor, Hospital })
+    const filter = { ydfID }
+    const options = { upsert: false };
+    const updateDoc = {
+        $set: {
             notes,
             Name,
             FatherName,
             MotherName,
             Address,
-            DOB,
+            DOB: new Date(DOB),
             gender,
             Doctor,
-            Hospital
+            Hospital,
         },
-    });
+    };
+    const result = await students.updateOne(filter, updateDoc, options);
+    console.log(result)
     res.sendStatus(200)
 })
 
 router.post('/items', async (req, res) => {
     const { ydfID, type, data } = req.body
+    let filter;
+    let options;
+    let updateDoc;
+    let result;
 
     switch (type) {
-        case 'insulin': await prisma.insulin.create({
-                data: {
-                    value: data.value,
-                    date: new Date(data.date),
-                    student: { connect: { ydfID } }
-                }
-            });
+        case 'insulin':
+            filter = { ydfID }
+            options = { upsert: false };
+            updateDoc = {
+                $push: {
+                    insulin: {
+                        value: data.value,
+                        date: new Date(data.date)
+                    }
+                },
+            };
+            result = await students.updateOne(filter, updateDoc, options);
             res.sendStatus(200)
             break;
-        case 'strip': await prisma.strip.create({
-                data: {
-                    value: data.value,
-                    date: new Date(data.date),
-                    student: { connect: { ydfID } }
-                }
-            });
+        case 'strip':
+            filter = { ydfID }
+            options = { upsert: false };
+            updateDoc = {
+                $push: {
+                    strip: {
+                        value: data.value,
+                        date: new Date(data.date)
+                    }
+                },
+            };
+            result = await students.updateOne(filter, updateDoc, options);
             res.sendStatus(200)
             break;
-        case 'syringe': await prisma.syringe.create({
-                data: {
-                    value: data.value,
-                    date: new Date(data.date),
-                    student: { connect: { ydfID } }
-                }
-            });
+        case 'syringe':
+            filter = { ydfID }
+            options = { upsert: false };
+            updateDoc = {
+                $push: {
+                    syringe: {
+                        value: data.value,
+                        date: new Date(data.date)
+                    }
+                },
+            };
+            result = await students.updateOne(filter, updateDoc, options);
             res.sendStatus(200)
             break;
         case 'hba1c':
-            await prisma.hBA1C.create({
-                data: {
-                    value: data.value,
-                    date: new Date(data.date),
-                    student: { connect: { ydfID } }
-                }
-            })
-            res.sendStatus(200)
-            break;
-        default: res.sendStatus(404)
-    }
-})
-
-router.delete('/items', async (req, res) => {
-    const { ydfID, type, data } = req.body
-
-    switch (type) {
-        case 'insulin': await prisma.insulin.delete({
-                where: {
-                    ydfID,
+            filter = { ydfID }
+            options = { upsert: false };
+            updateDoc = {
+                $push: {
+                    hba1c: {
+                        value: data.value,
+                        date: new Date(data.date)
+                    }
                 },
-            })
-            res.sendStatus(200)
-            break;
-        case 'strip': await prisma.strip.delete({
-                where: {
-                    ydfID,
-                },
-            })
-            res.sendStatus(200)
-            break;
-        case 'syringe': await prisma.syringe.delete({
-                where: {
-                    ydfID,
-                },
-            })
-            res.sendStatus(200)
-            break;
-        case 'hba1c': await prisma.hBA1C.delete({
-                where: {
-                    ydfID,
-                },
-            })
-            res.sendStatus(200)
-            break;
-        default: res.sendStatus(404)
-    }
-})
-
-router.put('/types', async (req, res) => {
-    const { ydfID, type, data } = req.body
-
-    switch (type) {
-        case 'insulin': await prisma.student.update({
-            where: {
-                ydfID
-            },
-            data: {
-                insulinType: data
-            },
-            });
-            res.sendStatus(200)
-            break;
-        case 'strip': await prisma.student.update({
-            where: {
-                ydfID
-            },
-            data: {
-                stripType: data
-            },
-            });
-            res.sendStatus(200)
-            break;
-        case 'syringe': await prisma.student.update({
-            where: {
-                ydfID
-            },
-            data: {
-                syringeType: data
-            },
-            });
+            };
+            result = await students.updateOne(filter, updateDoc, options);
             res.sendStatus(200)
             break;
         default: res.sendStatus(404)

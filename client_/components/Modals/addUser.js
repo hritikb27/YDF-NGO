@@ -4,20 +4,16 @@ import { CheckIcon } from '@heroicons/react/24/outline'
 import { addUser } from '../../features/users/usersSlice';
 import { useDispatch } from 'react-redux';
 
-const initialState = { studentID: '', name: '', email: '', insulin: 0, strips: 0 };
+const initialState = { ydfID: '', name: '', gender: '' };
 
 function reducer(state, action) {
   switch (action.type) {
-    case 'studentID':
-      return { ...state, studentID: action.payload };
+    case 'ydfID':
+      return { ...state, ydfID: action.payload };
     case 'name':
       return { ...state, name: action.payload };
-    case 'email':
-      return { ...state, email: action.payload };
-    case 'insulin':
-      return { ...state, insulin: action.payload };
-    case 'strips':
-      return { ...state, strips: action.payload };
+    case 'gender':
+      return { ...state, gender: action.payload };
     default:
       throw new Error();
   }
@@ -28,8 +24,11 @@ const AddUser = ({ openModal, setOpenModal }) => {
     const [state, dispatchInput] = useReducer(reducer, initialState)
     const cancelButtonRef = useRef(null)
 
-    const handleAddUser = () => {
-        dispatch(addUser({name: state.name, studentID: state.studentID, email: state.email, insulin: state.insulin, strips: state.strips}))
+    const handleAddUser = async () => {
+        const token = sessionStorage.getItem('token')
+        console.log('toke: ', token)
+        const res = await fetch('http://localhost:8080/student/add', {method:'post', headers: {'Content-Type': 'application/json', "Authorization" : `Bearer ${token}`}, body:JSON.stringify({"ydfID": state.ydfID, "Name": state.name, "gender": state.gender })})
+        dispatch(addUser({ name: state.name, ydfID: state.ydfID, gender: state.gender }))
         setOpenModal(false)
     }
 
@@ -75,8 +74,8 @@ const AddUser = ({ openModal, setOpenModal }) => {
                                                 </label>
                                                 <div className="mt-1">
                                                     <input
-                                                        value={state.studentID}
-                                                        onChange={(e) => dispatchInput({ type: 'studentID', payload: e.target.value })}
+                                                        value={state.ydfID}
+                                                        onChange={(e) => dispatchInput({ type: 'ydfID', payload: e.target.value })}
                                                         type="text"
                                                         required
                                                         className="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
@@ -100,41 +99,13 @@ const AddUser = ({ openModal, setOpenModal }) => {
                                             </div>
                                             <div className='w-[70%]'>
                                                 <label htmlFor="name" className="block text-start text-sm font-medium text-gray-700">
-                                                    Email
+                                                    Gender
                                                 </label>
                                                 <div className="mt-1">
                                                     <input
-                                                        value={state.email}
-                                                        onChange={(e) => dispatchInput({ type: 'email', payload: e.target.value })}
-                                                        type="email"
-                                                        required
-                                                        className="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
-                                                    />
-                                                </div>
-                                            </div>
-                                            <div className='w-[70%]'>
-                                                <label htmlFor="name" className="block text-start text-sm font-medium text-gray-700">
-                                                    Insulin
-                                                </label>
-                                                <div className="mt-1">
-                                                    <input
-                                                        value={state.insulin}
-                                                        onChange={(e) => dispatchInput({ type: 'insulin', payload: e.target.value })}
-                                                        type="number"
-                                                        required
-                                                        className="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
-                                                    />
-                                                </div>
-                                            </div>
-                                            <div className='w-[70%]'>
-                                                <label htmlFor="name" className="block text-start text-sm font-medium text-gray-700">
-                                                    Strips
-                                                </label>
-                                                <div className="mt-1">
-                                                    <input
-                                                        value={state.strips}
-                                                        onChange={(e) => dispatchInput({ type: 'strips', payload: e.target.value })}
-                                                        type="number"
+                                                        value={state.gender}
+                                                        onChange={(e) => dispatchInput({ type: 'gender', payload: e.target.value })}
+                                                        type="text"
                                                         required
                                                         className="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
                                                     />

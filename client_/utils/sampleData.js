@@ -6,6 +6,18 @@ const nodes = [
         email: 'Ram@gmail.com',
         strips: 1,
         nodes: 3,
+        "hba1c": {
+
+        },
+        Insulin: {
+
+        },
+        Strips: {
+
+        },
+        syringe: {
+
+        }
     },
     {
         id: '2',
@@ -14,6 +26,18 @@ const nodes = [
         email: 'Rahul@gmail.com',
         strips: 1,
         nodes: 3,
+        "hba1c": {
+
+        },
+        Insulin: {
+
+        },
+        Strips: {
+
+        },
+        syringe: {
+            
+        }
     },
     {
         id: '3',
@@ -22,6 +46,18 @@ const nodes = [
         email: 'Abhishek@gmail.com',
         strips: 2,
         nodes: 3,
+        "hba1c": {
+
+        },
+        Insulin: {
+
+        },
+        Strips: {
+
+        },
+        syringe: {
+            
+        }
     },
     {
         id: '4',
@@ -30,6 +66,18 @@ const nodes = [
         email: 'Gautam@gmail.com',
         strips: 1,
         nodes: 3,
+        "hba1c": {
+
+        },
+        Insulin: {
+
+        },
+        Strips: {
+
+        },
+        syringe: {
+            
+        }
     },
     {
         id: '5',
@@ -38,6 +86,18 @@ const nodes = [
         email: 'Sahil@gmail.com',
         strips: 1,
         nodes: 3,
+        "hba1c": {
+
+        },
+        Insulin: {
+
+        },
+        Strips: {
+
+        },
+        syringe: {
+            
+        }
     },
     {
         id: '6',
@@ -46,6 +106,18 @@ const nodes = [
         email: 'Shaan@gmail.com',
         strips: 1,
         nodes: 3,
+        "hba1c": {
+
+        },
+        Insulin: {
+
+        },
+        Strips: {
+
+        },
+        syringe: {
+            
+        }
     },
     {
         id: '7',
@@ -54,6 +126,18 @@ const nodes = [
         email: 'Amit@gmail.com',
         strips: 2,
         nodes: 3,
+        "hba1c": {
+
+        },
+        Insulin: {
+
+        },
+        Strips: {
+
+        },
+        syringe: {
+            
+        }
     },
     {
         id: '8',
@@ -62,6 +146,18 @@ const nodes = [
         email: 'Gagan@gmail.com',
         strips: 2,
         nodes: 3,
+        "hba1c": {
+
+        },
+        Insulin: {
+
+        },
+        Strips: {
+
+        },
+        syringe: {
+            
+        }
     },
     {
         id: '9',
@@ -70,6 +166,18 @@ const nodes = [
         email: 'Rohan@gmail.com',
         strips: 2,
         nodes: 3,
+        "hba1c": {
+
+        },
+        Insulin: {
+
+        },
+        Strips: {
+
+        },
+        syringe: {
+            
+        }
     },
 ];
 

@@ -1,4 +1,4 @@
-import { Fragment, useState } from 'react'
+import { Fragment, useEffect, useState } from 'react'
 import { Dialog, Menu, Transition } from '@headlessui/react'
 import {
   Bars3BottomLeftIcon,
@@ -16,6 +16,10 @@ import StaticSidebar from '../components/Sidebars/staticSidebar'
 
 import Header from '../components/Header'
 import UserManagement from '../components/userManagement'
+import { updateUserList } from '../features/users/usersSlice'
+import { useDispatch } from 'react-redux'
+import { updateItemsList } from '../features/users/itemsSlice'
+import Router from 'next/router'
 
 const navigation = [
   { name: 'Dashboard', href: '#', icon: HomeIcon, current: true },
@@ -26,6 +30,24 @@ const navigation = [
 
 
 export default function Home() {
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    async function fetchData(){
+      try {
+        const token = sessionStorage.getItem('token')
+        const res = await fetch('http://localhost:8080/student',{ headers: {'Content-Type': 'application/json', "Authorization" : `Bearer ${token}`}})
+        const data = await res.json();
+        console.log('USERS: ', data)
+        dispatch(updateUserList(data))
+      } catch(e) {
+        console.log('Unauthorized: ', e)
+        Router.push('/login')
+      }
+    }
+    fetchData()
+  }, [])
+
   return (
     <>
       <div>
@@ -37,7 +59,7 @@ export default function Home() {
               <div className="mx-auto max-w-7xl px-4 sm:px-6 md:px-8">
                 <h1 className="text-2xl font-semibold text-gray-900">User Management</h1>
               </div>
-              <div className="mx-auto max-w-7xl px-4 sm:px-6 md:px-8">
+              <div className="mx-auto max-w-8xl px-4 sm:px-6 md:px-2">
                 {/* Replace with your content */}
                 <UserManagement />
                 {/* /End replace */}

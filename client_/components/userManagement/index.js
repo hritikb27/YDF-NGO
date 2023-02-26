@@ -1,17 +1,31 @@
 import { MagnifyingGlassIcon } from '@heroicons/react/24/outline';
-import { useMemo, useState } from 'react';
-import { useSelector } from 'react-redux';
+import classNames from 'classnames';
+import { useEffect, useMemo, useRef, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import AddUser from '../Modals/addUser';
+import DetailsModal from '../Modals/Details';
 import Pagination from '../Pagination';
+import UserRow from './userRow';
 
 
 let PageSize = 10;
 
 const UserManagement = () => {
+  const dispatch = useDispatch()
   const usersList = useSelector(state => state.users.users)
+  const items = useRef()
+  const itemsList = useSelector(state => state.items.items)
   const [currentPage, setCurrentPage] = useState(1);
   const [currentItems, setCurrentItems] = useState()
   const [openModal, setOpenModal] = useState(false)
+  const [openPopup, setOpenPopup] = useState(false)
+  const [Strip, setStrip] = useState(false)
+  const [Syringe, setSyringe] = useState(false)
+  const [Insulin, setInsulin] = useState(false)
+  const currentID = useRef()
+  const currentUser = useRef()
+  const [details, setDetails] = useState()
+  const [editable, setEditable] = useState(false)
 
   useMemo(() => {
     const firstPageIndex = (currentPage - 1) * PageSize;
@@ -21,11 +35,16 @@ const UserManagement = () => {
   }, [currentPage, usersList]);
 
   const handleChange = (query) => {
-    const filteredResults = usersList.filter(item=>item.name.includes(query))
+    const filteredResults = usersList.filter(item => item.name.includes(query))
     setCurrentItems(filteredResults)
   }
+
+  useEffect(() => {
+    items.current = itemsList
+  }, [itemsList])
+
   return (
-    <div className="mt-8 flex flex-col gap-4">
+    <div className="mt-8 w-full flex flex-col gap-4">
       <div className="sm:flex sm:justify-between">
         <div className="w-full max-w-lg lg:max-w-xs">
           <label htmlFor="search" className="sr-only">
@@ -67,35 +86,32 @@ const UserManagement = () => {
                   <th scope="col" className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6">
                     Notes
                   </th>
-                  <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
+                  <th scope="col" className="px-1 py-3.5 text-left text-sm font-semibold text-gray-900">
                     Name
                   </th>
-                  <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
+                  <th scope="col" className="px-1 py-3.5 text-left text-sm font-semibold text-gray-900">
                     Address
                   </th>
-                  <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
+                  <th scope="col" className="px-1 py-3.5 text-left text-sm font-semibold text-gray-900">
                     DOB
                   </th>
-                  <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
+                  <th scope="col" className="px-1 py-3.5 text-left text-sm font-semibold text-gray-900">
                     Gender
                   </th>
-                  <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
+                  <th scope="col" className="px-1 py-3.5 text-left text-sm font-semibold text-gray-900">
                     Dr. & Hospital
                   </th>
-                  <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
+                  <th scope="col" className="px-1 py-3.5 text-left text-sm font-semibold text-gray-900">
                     HBA1C
                   </th>
-                  <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
+                  <th scope="col" className="px-1 py-3.5 text-left text-sm font-semibold text-gray-900">
                     Insulin
                   </th>
-                  <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
+                  <th scope="col" className="px-1 py-3.5 text-left text-sm font-semibold text-gray-900">
                     Strips
                   </th>
-                  <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
+                  <th scope="col" className="px-1 py-3.5 text-left text-sm font-semibold text-gray-900">
                     Syringe/Pen Needle
-                  </th>
-                  <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                    Email
                   </th>
                   <th scope="col" className="relative py-3.5 pl-3 pr-4 sm:pr-6">
                     <span className="sr-only">Edit</span>
@@ -103,33 +119,9 @@ const UserManagement = () => {
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-200 bg-white">
-                {currentItems && currentItems.map((person) => (
-                  <tr key={person.email}>
-                    <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
-                      {person.id}
-                    </td>
-                    <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{}</td>
-                    <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                      <div>{person.name}</div>
-                      <div>{person.name}</div>
-                      <div>{person.name}</div>
-                    </td>
-                    <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{'Address'}</td>
-                    <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{'DOB'}</td>
-                    <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{'F'}</td>
-                    <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{'Dr.'}</td>
-                    <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{'HBA1C'}</td>
-                    <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{person.insulin}</td>
-                    <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{person.strips}</td>
-                    <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{'Syringe/Pen'}</td>
-                    <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{person.email}</td>
-                    <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
-                      <a href="#" className="text-indigo-600 hover:text-indigo-900">
-                        Edit<span className="sr-only">, {person.name}</span>
-                      </a>
-                    </td>
-                  </tr>
-                ))}
+                {currentItems && currentItems.map((person) => {
+                  return <UserRow items={items} person={person} currentID={currentID} currentUser={currentUser} setDetails={setDetails} setOpenPopup={setOpenPopup} />
+                })}
               </tbody>
             </table>
             <Pagination
@@ -141,6 +133,10 @@ const UserManagement = () => {
             />
           </div>
           <AddUser openModal={openModal} setOpenModal={setOpenModal} />
+          <DetailsModal openModal={openPopup} setOpenModal={setOpenPopup} details={details} ydfID={currentID.current} currentUser={currentUser.current} />
+          {/* <DetailsModal openModal={Insulin} setOpenModal={setInsulin} />
+          <DetailsModal openModal={Strip} setOpenModal={setStrip} />
+          <DetailsModal openModal={Syringe} setOpenModal={setSyringe} /> */}
         </div>
       </div>
     </div>
