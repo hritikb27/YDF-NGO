@@ -1,11 +1,11 @@
 const { MongoClient } = require("mongodb");
+require('dotenv').config();
 
-const uri =
-  "mongodb+srv://yogdhyaanfoundation:*yogdhyaan123*@yogdhyaancrud.6med7w4.mongodb.net/?retryWrites=true&w=majority";
+const uri = process.env.DATABASE_URL;
 const client = new MongoClient(uri);
-const database = client.db('yogdhyaan');
+const database = client.db(process.env.COLLECTION);
 const students = database.collection('students');
 const admin = database.collection('admins');
-const JwtSecretKey = 'somesecretkey';
+const JwtSecretKey = process.env.JWT_SECRET;
 
 module.exports = { students, admin, JwtSecretKey }
