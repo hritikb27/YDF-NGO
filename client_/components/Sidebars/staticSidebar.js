@@ -1,10 +1,12 @@
 {/* Static sidebar for desktop */ }
+import Router from "next/router";
 import classNames from "../../utils/classNames";
 
 const StaticSidebar = ({ navigation }) => {
 
     const handleLogout =() => {
         sessionStorage.removeItem('token')
+        Router.push('/login')
     }
 
     return (

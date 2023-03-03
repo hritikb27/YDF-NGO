@@ -27,7 +27,7 @@ const AddUser = ({ openModal, setOpenModal }) => {
     const handleAddUser = async () => {
         const token = sessionStorage.getItem('token')
         console.log('toke: ', token)
-        const res = await fetch('http://localhost:8080/student/add', {method:'post', headers: {'Content-Type': 'application/json', "Authorization" : `Bearer ${token}`}, body:JSON.stringify({"ydfID": state.ydfID, "Name": state.name, "gender": state.gender })})
+        const res = await fetch('https://yogdhyaan-ngo.onrender.com/student/add', {method:'post', headers: {'Content-Type': 'application/json', "Authorization" : `Bearer ${token}`}, body:JSON.stringify({"ydfID": state.ydfID, "Name": state.name, "gender": state.gender })})
         dispatch(addUser({ name: state.name, ydfID: state.ydfID, gender: state.gender }))
         setOpenModal(false)
     }

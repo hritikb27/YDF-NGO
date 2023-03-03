@@ -27,7 +27,7 @@ const Login = () => {
     const [form, dispatch] = useReducer(reducer, initialTodos);
 
     const handleClick = async () => {
-        const sendreq = await fetch('http://localhost:8080/admin/login', {method:'post', headers: {'Content-Type': 'application/json'}, body:JSON.stringify({ 'email': form.email, 'password': form.password })})
+        const sendreq = await fetch('https://yogdhyaan-ngo.onrender.com/admin/login', {method:'post', headers: {'Content-Type': 'application/json'}, body:JSON.stringify({ 'email': form.email, 'password': form.password })})
         const res = await sendreq.json()
         sessionStorage.setItem('token', res.token)
         console.log(res)

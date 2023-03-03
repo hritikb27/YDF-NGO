@@ -36,7 +36,7 @@ export default function Home() {
     async function fetchData(){
       try {
         const token = sessionStorage.getItem('token')
-        const res = await fetch('http://localhost:8080/student',{ headers: {'Content-Type': 'application/json', "Authorization" : `Bearer ${token}`}})
+        const res = await fetch('https://yogdhyaan-ngo.onrender.com/student',{ headers: {'Content-Type': 'application/json', "Authorization" : `Bearer ${token}`}})
         const data = await res.json();
         console.log('USERS: ', data)
         dispatch(updateUserList(data))

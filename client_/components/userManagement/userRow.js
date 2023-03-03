@@ -45,7 +45,7 @@ const UserRow = ({ items, person, currentID, currentUser, setDetails, setOpenPop
 
     const handleEdit = async () => {
         const token = sessionStorage.getItem('token')
-        const req = await fetch('http://localhost:8080/student/update', { method: 'put', headers: { 'Content-Type': 'application/json', "Authorization" : `Bearer ${token}` }, body: JSON.stringify({ ydfID: person.ydfID, notes: fields.notes, Name: fields.Name, gender: fields.gender, FatherName: fields.FatherName, MotherName: fields.MotherName, Address: fields.Address, DOB: date, Doctor: fields.Doctor, Hospital: fields.Hospital }) })
+        const req = await fetch('https://yogdhyaan-ngo.onrender.com/student/update', { method: 'put', headers: { 'Content-Type': 'application/json', "Authorization" : `Bearer ${token}` }, body: JSON.stringify({ ydfID: person.ydfID, notes: fields.notes, Name: fields.Name, gender: fields.gender, FatherName: fields.FatherName, MotherName: fields.MotherName, Address: fields.Address, DOB: date, Doctor: fields.Doctor, Hospital: fields.Hospital }) })
         console.log({ ydfID: person.ydfID, notes: fields.notes, Name: fields.Name, gender: fields.gender, FatherName: fields.FatherName, MotherName: fields.MotherName, Address: fields.Address, DOB: date, Doctor: fields.Doctor, Hospital: fields.Hospital })
         setEditable(prev => !prev)
     }

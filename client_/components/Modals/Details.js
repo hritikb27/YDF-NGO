@@ -23,7 +23,7 @@ const DetailsModal = ({ openModal, setOpenModal, details, ydfID, currentUser }) 
             date: value
         }
 
-        const res = await fetch('http://localhost:8080/student/items', {method:'post', headers: {'Content-Type': 'application/json'}, body:JSON.stringify({ ydfID, 'type': details.key, data: { value: details.key === 'hba1c' ? parseFloat(value) : parseInt(value), date } })})
+        const res = await fetch('https://yogdhyaan-ngo.onrender.com/student/items', {method:'post', headers: {'Content-Type': 'application/json'}, body:JSON.stringify({ ydfID, 'type': details.key, data: { value: details.key === 'hba1c' ? parseFloat(value) : parseInt(value), date } })})
         dispatch(updateUser(user))
         setOpenModal(false)
     }
@@ -33,7 +33,7 @@ const DetailsModal = ({ openModal, setOpenModal, details, ydfID, currentUser }) 
         if(!editable){
             return
         }
-        const res = await fetch('http://localhost:8080/student/types', {method:'put', headers: {'Content-Type': 'application/json'}, body:JSON.stringify({ ydfID, 'type': details.key, data: type })})
+        const res = await fetch('https://yogdhyaan-ngo.onrender.com/student/types', {method:'put', headers: {'Content-Type': 'application/json'}, body:JSON.stringify({ ydfID, 'type': details.key, data: type })})
         setEditable(prev=>!prev)
     }
     useEffect(() =>{
